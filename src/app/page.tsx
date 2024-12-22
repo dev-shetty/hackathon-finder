@@ -1,16 +1,18 @@
-import { HackathonCard } from "@/components/hackathon-card"
+import { HackathonList } from "@/components/hackathon-list"
 import {
   fetchDevpostHackathons,
   fetchUnstopHackathons,
 } from "@/services/hackathons"
 
+const PAGE_SIZE = 6
+
 export default async function Home() {
   const [devpostHackathons, unstopHackathons] = await Promise.all([
     Promise.all(
-      Array.from({ length: 5 }, (_, i) => fetchDevpostHackathons(i + 1))
+      Array.from({ length: PAGE_SIZE }, (_, i) => fetchDevpostHackathons(i + 1))
     ).then((results) => results.flat()),
     Promise.all(
-      Array.from({ length: 5 }, (_, i) => fetchUnstopHackathons(i + 1))
+      Array.from({ length: PAGE_SIZE }, (_, i) => fetchUnstopHackathons(i + 1))
     ).then((results) => results.flat()),
   ])
 
@@ -19,15 +21,11 @@ export default async function Home() {
   )
 
   return (
-    <main className="container mx-auto py-8">
+    <main className="container mx-auto py-8 px-2">
       <h1 className="text-4xl font-bold mb-8 text-center">
         Upcoming Hackathons
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {allHackathons.map((hackathon, index) => (
-          <HackathonCard key={index} hackathon={hackathon} />
-        ))}
-      </div>
+      <HackathonList hackathons={allHackathons} />
     </main>
   )
 }

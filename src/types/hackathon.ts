@@ -7,10 +7,10 @@ export interface NormalizedHackathon {
   organizer: string
   currency?: string
   prize: string
-  tags: { id: number; name: string }[]
+  tags: string[]
   source: "devpost" | "unstop"
   registrationCount: number
+  timeLeft: string
   location: string
-  mode: string
   submissionDate: string
 }

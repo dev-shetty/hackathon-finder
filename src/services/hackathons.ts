@@ -30,9 +30,15 @@ export async function fetchDevpostHackathons(
         url: hackathon.url,
         organizer: hackathon.organization_name,
         imageUrl: formatImageUrl(hackathon.thumbnail_url),
-        submissionDate: hackathon.submission_period_dates,
+        startDate: new Date(
+          hackathon.submission_period_dates.split(" - ")[0]
+        ).toLocaleDateString(),
+        endDate: new Date(
+          hackathon.submission_period_dates.split(" - ")[1]
+        ).toLocaleDateString(),
         prize: cleanCurrencySpan(hackathon.prize_amount),
-        tags: hackathon.themes,
+        timeLeft: hackathon.time_left_to_submission,
+        tags: hackathon.themes.map((theme) => theme.name),
         registrationCount: hackathon.registrations_count,
         location: hackathon.displayed_location.location,
         source: "devpost" as const,
@@ -59,8 +65,6 @@ export async function fetchUnstopHackathons(
     )
     const data = await response.json()
 
-    console.log(data)
-
     const normalizedData = data.data.data.map(
       (hackathon: UnstopHackathonDetails) => ({
         title: hackathon.title,
@@ -70,21 +74,15 @@ export async function fetchUnstopHackathons(
         startDate: new Date(hackathon.start_date).toLocaleDateString(),
         endDate: new Date(hackathon.end_date).toLocaleDateString(),
         currency: hackathon.prizes[0]?.currency,
-        prize: hackathon.prizes.reduce(
-          (acc, curr) => acc + (curr?.cash ?? 0),
-          0
-        ),
+        prize: hackathon.prizes
+          .reduce((acc, curr) => acc + (curr?.cash ?? 0), 0)
+          .toLocaleString(),
         location: hackathon.region,
-        tags: hackathon.filters.map((filter, index) => ({
-          id: index,
-          name: filter.name,
-        })),
+        tags: hackathon.filters.map((filter) => filter.name),
         source: "unstop" as const,
         registrationCount: hackathon.registerCount,
       })
     )
-
-    console.log(normalizedData)
 
     return normalizedData
   } catch (error) {

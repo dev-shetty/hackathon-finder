@@ -9,6 +9,7 @@ import {
 import { NormalizedHackathon } from "@/types/hackathon"
 import Image from "next/image"
 import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
 
 export function HackathonCard({
   hackathon,
@@ -29,6 +30,9 @@ export function HackathonCard({
               placeholder="blur"
               blurDataURL={hackathon.imageUrl}
             />
+            <div className="absolute top-0 right-0">
+              <Badge variant="secondary">{hackathon.source}</Badge>
+            </div>
           </div>
           <CardTitle className="mt-4">{hackathon.title}</CardTitle>
           <CardDescription>{hackathon.organizer}</CardDescription>
@@ -38,13 +42,17 @@ export function HackathonCard({
             <p className="text-sm">
               <span className="font-semibold">Prize:</span>{" "}
               {hackathon.currency === "fa-rupee" && "₹"}
-              {hackathon.prize.toLocaleString()}
+              {hackathon.prize}
             </p>
             <p className="text-sm">
-              <span className="font-semibold">Dates:</span>{" "}
-              {hackathon.source === "devpost"
-                ? hackathon.submissionDate
-                : `${hackathon.startDate} - ${hackathon.endDate}`}
+              {" "}
+              {hackathon.endDate !== "Invalid Date" ? (
+                <span className="font-semibold">
+                  Dates: {hackathon.startDate} - {hackathon.endDate}
+                </span>
+              ) : (
+                <span className="">{hackathon.timeLeft}</span>
+              )}
             </p>
             <p className="text-sm">
               <span className="font-semibold">Registrations:</span>{" "}
@@ -58,12 +66,12 @@ export function HackathonCard({
         </CardContent>
         <CardFooter className="flex flex-col items-start gap-2">
           <div className="flex flex-wrap gap-2">
-            {hackathon.tags.map((tag, index) => (
+            {hackathon.tags.map((tag) => (
               <span
-                key={tag.id}
+                key={tag}
                 className="bg-secondary text-secondary-foreground px-2 py-1 rounded-full text-xs"
               >
-                {tag.name}
+                {tag}
               </span>
             ))}
           </div>
