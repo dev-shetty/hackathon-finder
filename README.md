@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hackathon Finder
 
-## Getting Started
+A minimal website which fetches data from popular websites related to hackathons and shows it in a single page UI, with filters and sorting options.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Supported Hackathons Websites
+- Devpost
+- Unstop
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Powered by
+- Next.js 15
+- ShadCN UI
+- TailwindCSS
+- TypeScript
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What is this?
+- This website lists hackathon details like prizes, dates, and registration count, etc.
+- Has option to filter between hackathon categories / tags.
+- Can sort based on end time or prize pool.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Why is this?
+So one of my juniors complained about missing hackathons and not finding relevant ones. Valid concern, the current Hackathon sites are too cluttered, this is a small effort on making the hackathons more visible.
 
-## Learn More
+## How is this?
+Initially I thought about scraping and doing it the hard way. But instead it fetches the hackathon data from the APIs which power the hackathon listing in their own platform.
 
-To learn more about Next.js, take a look at the following resources:
+## What can be improved?
+Since I built it in just around 3 hours? There are lot of things which can be added or improved. Let me list a few
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- A better and ordered UI,
+- Add support to more hackathon hosting platform
+- There are much more data returned from the API (you can check the types for each response), can be more creative using it.
+- The dates are not proper because of inconsistent formatting in the API itself, can be a good fix.
+- Potential to add more options to get curated data, eg. Location filter
+- While sorting via prizepool, the sort should obey the currency.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Development
+Setting up locally is as simple as forgetting the environment variables while deploying XD
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Clone the repo
+- `npm install`
+- `npm run dev`
+- Kaboom done!
