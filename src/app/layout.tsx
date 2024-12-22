@@ -1,12 +1,30 @@
 import "./globals.css"
 import { Inter } from "next/font/google"
 import { cn } from "@/lib/utils"
+import { Metadata } from "next"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export const metadata = {
-  title: "Hackathon Hub",
+export const metadata: Metadata = {
+  title: "Hackathon Finder",
   description: "Discover upcoming hackathons from various platforms",
+  authors: [
+    {
+      name: "Dev Shetty",
+      url: "https://dev.shetty.me",
+    },
+  ],
+  openGraph: {
+    title: "Hackathon Finder",
+    description: "Discover upcoming hackathons from various platforms",
+    url: "https://hackathon-finder.vercel.app",
+    siteName: "Hackathon Finder",
+    images: [
+      {
+        url: "/og-image.png",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
