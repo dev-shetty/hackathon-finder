@@ -150,7 +150,6 @@ export interface FestivalRegnRequirements {
   only_official_domains: null
   enable_verifications: null
   enable_icsfile: null
-  proctoring: Proctoring
   gender_diversity: null
   allow_social_login: number
   allowed_countries: null
