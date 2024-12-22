@@ -38,6 +38,7 @@ export interface Datum {
   filters: Filter[]
   isPaid: boolean
   festival: Festival | null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fields: any[]
   prizes: Prize[]
   opportunity_config: OpportunityConfig
@@ -50,6 +51,7 @@ export interface Datum {
   viewsCount: number
   registerCount: number
   regnRequirements: DatumRegnRequirements
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   job_detail?: any[]
 }
 
@@ -207,6 +209,7 @@ export interface JobDetail {
   entity_id: number
   max_salary: null
   currency: Currency
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   locations: any[]
   type: null
   not_disclosed: boolean

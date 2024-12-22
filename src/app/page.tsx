@@ -1,26 +1,23 @@
 import { HackathonList } from "@/components/hackathon-list"
-import {
-  fetchDevpostHackathons,
-  fetchUnstopHackathons,
-} from "@/services/hackathons"
 import { Github } from "lucide-react"
 import Link from "next/link"
 
-const PAGE_SIZE = 6
+async function fetchHackathons() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hackathons`,
+    {
+      cache: "force-cache",
+      next: {
+        tags: ["hackathons"],
+        revalidate: 60 * 60,
+      },
+    }
+  )
+  return await response.json()
+}
 
 export default async function Home() {
-  const [devpostHackathons, unstopHackathons] = await Promise.all([
-    Promise.all(
-      Array.from({ length: PAGE_SIZE }, (_, i) => fetchDevpostHackathons(i + 1))
-    ).then((results) => results.flat()),
-    Promise.all(
-      Array.from({ length: PAGE_SIZE }, (_, i) => fetchUnstopHackathons(i + 1))
-    ).then((results) => results.flat()),
-  ])
-
-  const allHackathons = [...devpostHackathons, ...unstopHackathons].sort(
-    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-  )
+  const { hackathons } = await fetchHackathons()
 
   return (
     <main className="container mx-auto py-8 px-2 relative">
@@ -35,7 +32,7 @@ export default async function Home() {
       <h1 className="text-4xl font-bold mb-8 text-center">
         Upcoming Hackathons
       </h1>
-      <HackathonList hackathons={allHackathons} />
+      <HackathonList hackathons={hackathons} />
     </main>
   )
 }

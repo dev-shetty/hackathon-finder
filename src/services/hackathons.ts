@@ -61,7 +61,14 @@ export async function fetchUnstopHackathons(
     const response = await fetch(
       `https://unstop.com/api/public/opportunity/search-result?opportunity=hackathons&page=${
         page ?? 1
-      }&per_page=15&oppstatus=open&quickApply=true`
+      }&per_page=15&oppstatus=open&quickApply=true`,
+      {
+        cache: "force-cache",
+        next: {
+          revalidate: 60 * 60 * 24,
+          tags: ["unstop-hackathons"],
+        },
+      }
     )
     const data = await response.json()
 
