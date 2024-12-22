@@ -3,21 +3,30 @@ import { Github } from "lucide-react"
 import Link from "next/link"
 
 async function fetchHackathons() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hackathons`,
-    {
-      cache: "force-cache",
-      next: {
-        tags: ["hackathons"],
-        revalidate: 60 * 60,
-      },
-    }
-  )
-  return await response.json()
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/hackathons`,
+      {
+        cache: "force-cache",
+        next: {
+          tags: ["hackathons"],
+          revalidate: 60 * 60,
+        },
+      }
+    )
+    return await response.json()
+  } catch (error) {
+    console.error("Failed to fetch hackathons:", error)
+    return { hackathons: [] }
+  }
 }
 
 export default async function Home() {
   const { hackathons } = await fetchHackathons()
+
+  if (!hackathons) {
+    return <div>No hackathons found</div>
+  }
 
   return (
     <main className="container mx-auto py-8 px-2 relative">
