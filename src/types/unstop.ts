@@ -184,8 +184,6 @@ export interface FestivalRegnRequirements {
   reg_status: string
 }
 
-export interface Proctoring {}
-
 export type Text = "Ended" | "day left" | " days left"
 
 export interface RemainingDaysArray {
