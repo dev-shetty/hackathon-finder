@@ -2,6 +2,7 @@ import "./globals.css"
 import { Inter } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { Metadata } from "next"
+import { PostHogProvider } from "@/app/providers/posthog-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -40,7 +41,7 @@ export default function RootLayout({
           inter.className
         )}
       >
-        {children}
+        <PostHogProvider>{children}</PostHogProvider>
       </body>
     </html>
   )

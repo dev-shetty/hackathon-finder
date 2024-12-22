@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { posthog } from "@/services/posthog"
 
 export function HackathonList({
   hackathons,
@@ -108,14 +109,23 @@ export function HackathonList({
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              setIsModalOpen(true)
+              posthog.capture("filter_modal_opened")
+            }}
             className="px-4 py-2 bg-secondary text-secondary-foreground rounded-lg flex items-center gap-2"
           >
             <FilterIcon className="w-4 h-4" />
             Filters {selectedTags.length > 0 && `(${selectedTags.length})`}
           </button>
 
-          <Select value={sortConfig} onValueChange={setSortConfig}>
+          <Select
+            value={sortConfig}
+            onValueChange={(value) => {
+              setSortConfig(value)
+              posthog.capture("sort_changed", { sort_type: value })
+            }}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Sort by..." />
             </SelectTrigger>
